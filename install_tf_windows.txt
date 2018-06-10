@@ -1,0 +1,101 @@
+# How to install TensorFlow on Windows
+
+For this walk-thru, I'm running Python 3.6.5 and Visual Studio 15.7 2017 on Windows 10. 
+I had already installed the numpy and wheel Python libraries when I was in PyCharm previously.
+My system supports AVX but not GPU-based TensorFlow (I have Intel, not NVidia GPU). 
+
+To find out if your system supports AVX, download and run CoreInfo.exe and look for the AVX entry:
+https://docs.microsoft.com/en-us/sysinternals/downloads/coreinfo
+
+Download and install CMake from https://cmake.org/download/ if you haven't already. If you already have a command prompt window open, you'll need to close and reopen before running any cmake commands.
+
+-----------------------------------------------------------------------------------
+
+I had previously opened cmd.exe in Adminstrator mode and tried the following commands:
+
+C:\WINDOWS\system32>pip install tensorflow
+Collecting tensorflow
+  Could not find a version that satisfies the requirement tensorflow (from versions: )
+No matching distribution found for tensorflow
+
+C:\WINDOWS\system32>pip3 install --upgrade tensorflow
+Collecting tensorflow
+  Could not find a version that satisfies the requirement tensorflow (from versions: )
+No matching distribution found for tensorflow
+
+----------------------------------------------------------------------------------
+THE REAL DEAL:
+
+1. Navigate to C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools\VC\x64 Native Tools Command Prompt for VS 2017.lnk --> open it.
+
+**********************************************************************
+** Visual Studio 2017 Developer Command Prompt v15.7.3
+** Copyright (c) 2017 Microsoft Corporation
+**********************************************************************
+[vcvarsall.bat] Environment initialized for: 'x64'
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise>
+
+2. cd c:\
+
+3. c:\>git clone https://github.com/tensorflow/tensorflow
+
+Cloning into 'tensorflow'...
+remote: Counting objects: 365769, done.
+remote: Total 365769 (delta 0), reused 0 (delta 0), pack-reused 365769
+Receiving objects: 100% (365769/365769), 169.72 MiB | 2.23 MiB/s, done.
+Resolving deltas: 100% (290319/290319), done.
+
+4. c:\>cd tensorflow
+
+5. c:\tensorflow>git checkout r1.5
+
+Switched to a new branch 'r1.5'
+Branch 'r1.5' set up to track remote branch 'r1.5' from 'origin'.
+
+6. c:\tensorflow>cd tensorflow\contrib\cmake
+
+7. c:\tensorflow\tensorflow\contrib\cmake>mkdir build
+
+8. c:\tensorflow\tensorflow\contrib\cmake>cd build
+
+9. c:\tensorflow\tensorflow\contrib\cmake\build>cmake -G "Visual Studio 15 2017 Win64" -T host=x64 -DCMAKE_BUILD_TYPE=Release -DSWIG_EXECUTABLE=c:/swigwin-3.0.12/swig.exe -Dtensorflow_ENABLE_GPU=OFF -Dtensorflow_WIN_CPU_SIMD_OPTIONS=/arch:AVX2 ..
+
+-- The C compiler identification is MSVC 19.14.26430.0
+-- The CXX compiler identification is MSVC 19.14.26430.0
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/bin/Hostx64/x64/cl.exe
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/bin/Hostx64/x64/cl.exe -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/bin/Hostx64/x64/cl.exe
+-- Check for working CXX compiler: C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.14.26428/bin/Hostx64/x64/cl.exe -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test COMPILER_OPT_ARCH_NATIVE_SUPPORTED
+-- Performing Test COMPILER_OPT_ARCH_NATIVE_SUPPORTED - Failed
+-- Performing Test COMPILER_OPT_WIN_CPU_SIMD_SUPPORTED
+-- Performing Test COMPILER_OPT_WIN_CPU_SIMD_SUPPORTED - Success
+-- Found PythonInterp: C:/Users/mbeebower/AppData/Local/Programs/Python/Python36-32/python.exe (found version "3.6.5")
+-- Found PythonLibs: C:/Users/mbeebower/AppData/Local/Programs/Python/Python36-32/libs/python36.lib (found version "3.6.5")
+CMake Error at C:/Program Files/CMake/share/cmake-3.11/Modules/FindSWIG.cmake:38 (message):
+  Command "C:/swigwin-3.0.12/swig.exe -swiglib" failed with output:
+
+Call Stack (most recent call first):
+  tf_python.cmake:410 (find_package)
+  CMakeLists.txt:422 (include)
+
+
+CMake Error at C:/Program Files/CMake/share/cmake-3.11/Modules/FindPackageHandleStandardArgs.cmake:137 (message):
+  Could NOT find SWIG (missing: SWIG_DIR)
+Call Stack (most recent call first):
+  C:/Program Files/CMake/share/cmake-3.11/Modules/FindPackageHandleStandardArgs.cmake:378 (_FPHSA_FAILURE_MESSAGE)
+  C:/Program Files/CMake/share/cmake-3.11/Modules/FindSWIG.cmake:63 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  tf_python.cmake:410 (find_package)
+  CMakeLists.txt:422 (include)
+
+
+-- Configuring incomplete, errors occurred!
+See also "C:/tensorflow/tensorflow/contrib/cmake/build/CMakeFiles/CMakeOutput.log".
+See also "C:/tensorflow/tensorflow/contrib/cmake/build/CMakeFiles/CMakeError.log".
