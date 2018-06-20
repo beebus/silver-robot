@@ -2,3 +2,9 @@
 Repo for working with Google's TensorFlow. Python, maybe some C++, AWS Machine Learning, AWS SageMaker, NumPy, SciPy.
 
 Hi Beebus!  I wuz here -pfiddy
+
+A co-worker had 2 recommendations for installing TensorFlow:
+1. Install an older version, like TensorFlow 1.0 instead of 1.6
+OR
+2. Install on a VM, like Google Compute
+https://hackernoon.com/launch-a-gpu-backed-google-compute-engine-instance-and-setup-tensorflow-keras-and-jupyter-902369ed5272
