@@ -8,3 +8,6 @@ A co-worker had 2 recommendations for installing TensorFlow:
 OR
 2. Install on a VM, like Google Compute
 https://hackernoon.com/launch-a-gpu-backed-google-compute-engine-instance-and-setup-tensorflow-keras-and-jupyter-902369ed5272
+
+Another machine learning Python library that I just became aware of is Scikit-Learn:
+http://scikit-learn.org/stable/index.html
