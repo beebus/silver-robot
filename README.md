@@ -11,3 +11,7 @@ https://hackernoon.com/launch-a-gpu-backed-google-compute-engine-instance-and-se
 
 Another machine learning Python library that I just became aware of is Scikit-Learn:
 http://scikit-learn.org/stable/index.html
+
+Best Way to Install TensorFlow:
+https://www.tensorflow.org/install/install_windows
+* Follow the subheading for "Installing with Anaconda"
